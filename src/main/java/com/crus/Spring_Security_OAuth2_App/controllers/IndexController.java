@@ -15,7 +15,10 @@ public class IndexController {
     }
 
     @GetMapping("/protected")
-    public String protectedIndex() {
+    public String protectedIndex(Authentication authentication) {
+        if (authentication != null) {
+            System.out.println(authentication);
+        }
         return "index";
     }
 }
