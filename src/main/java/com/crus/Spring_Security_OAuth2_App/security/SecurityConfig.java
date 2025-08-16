@@ -22,17 +22,16 @@ public class SecurityConfig {
                         .permitAll())
                 .oauth2Login(Customizer.withDefaults())
                 .formLogin(form -> form
-                        .loginPage("/login")
+                        .loginPage("/")
                         .failureUrl("/error")
                 )
                 .logout(logout -> logout
                         .logoutUrl("/logout")
-                        .logoutSuccessUrl("/"))
+                        .logoutSuccessUrl("/login"))
                 .sessionManagement(session -> session
                         .maximumSessions(3)
                         .maxSessionsPreventsLogin(true)
                         .expiredUrl("/login?expired"));
-
         return http.build();
     }
 }
