@@ -25,10 +25,9 @@ public class SecurityConfig {
                         .loginPage("/login")
                         .failureUrl("/error")
                 )
-                .logout(Customizer.withDefaults())
                 .logout(logout -> logout
                         .logoutUrl("/logout")
-                        .logoutSuccessUrl("/index"))
+                        .logoutSuccessUrl("/"))
                 .sessionManagement(session -> session
                         .maximumSessions(3)
                         .maxSessionsPreventsLogin(true)

@@ -5,9 +5,17 @@
     <meta charset="utf-8" />
     <link rel="stylesheet" href="css/main.css" th:href="@{/css/main.css}" />
 </head>
-<body th:with="httpStatus=${T(org.springframework.http.HttpStatus).valueOf(#response.status)}">
-<h1 th:text="|${httpStatus} - ${httpStatus.reasonPhrase}|">404</h1>
-<p th:utext="${errorMessage}">Error java.lang.NullPointerException</p>
-<a href="index.html" th:href="@{/index.html}">Back to Home Page</a>
+<body>
+<h1>Error</h1>
+<div th:if="${loginError}">
+    <p class="error">Login failed. Please check your credentials and try again.</p>
+</div>
+<div th:if="${errorMessage}">
+    <p th:utext="${errorMessage}">Error message</p>
+</div>
+<div th:if="${!loginError && !errorMessage}">
+    <p>An unexpected error occurred. Please try again.</p>
+</div>
+<a href="/" th:href="@{/}">Back to Home Page</a>
 </body>
 </html>

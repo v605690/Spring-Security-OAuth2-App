@@ -1,9 +1,10 @@
 package com.crus.Spring_Security_OAuth2_App.controllers;
 
-import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class IndexController {
@@ -22,19 +23,18 @@ public class IndexController {
         }
         return "index";
     }
-    @GetMapping("/login")
-    public String login() {
-        return "login";
-    }
 
-    @GetMapping("/login/error")
+    @GetMapping("/error")
     public String loginError(Model model) {
-        model.addAttribute("loginError, true");
+        model.addAttribute("loginError", true);
         return "error";
     }
-    @GetMapping("/login/expired")
-    public String loginExpired(Model model) {
-        model.addAttribute("loginExpired, true");
-        return "expired";
+
+    @GetMapping("/login")
+    public String loginExpired(@RequestParam(required = false) String expired, Model model) {
+        if ("true".equals(expired)) {
+            model.addAttribute("loginExpired", true);
+        }
+        return "login";
     }
 }
