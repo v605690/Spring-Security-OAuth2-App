@@ -4,9 +4,11 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
+@EnableWebSecurity
 public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -18,7 +20,20 @@ public class SecurityConfig {
                         .authenticated()
                         .anyRequest()
                         .permitAll())
-                .oauth2Login(Customizer.withDefaults());
+                .oauth2Login(Customizer.withDefaults())
+                .formLogin(form -> form
+                        .loginPage("/login")
+                        .failureUrl("/error")
+                )
+                .logout(Customizer.withDefaults())
+                .logout(logout -> logout
+                        .logoutUrl("/logout")
+                        .logoutSuccessUrl("/index"))
+                .sessionManagement(session -> session
+                        .maximumSessions(3)
+                        .maxSessionsPreventsLogin(true)
+                        .expiredUrl("/login?expired"));
+
         return http.build();
     }
 }

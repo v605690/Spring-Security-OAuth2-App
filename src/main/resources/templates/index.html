@@ -22,7 +22,7 @@
             </strong>
         </p>
 
-        <div sec:authorize="hasRole('USER')"
+        <div sec:authorize="hasAuthority('OAUTH2_USER')"
              class="alert alert-primary" role="alert">
 
             This section is only visible only for ROLE_USER.
@@ -31,6 +31,9 @@
 
         This section is visible to all users (including ANONYMOUS).
 
+        <p>User: <span sec:authentication="name"></span></p>
+        <p>Roles: <span sec:authentication="principal"></span></p>
+
         <form sec:authorize="hasRole('ANONYMOUS')"
               method="get" th:action="@{/protected}">
 
@@ -38,7 +41,7 @@
                    value="Login"/>
 
         </form>
-        <form sec:authorize="hasRole('USER')"
+        <form sec:authorize="hasAuthority('OAUTH2_USER')"
               method="post" th:action="@{/logout}">
 
             <input type="submit" class="btn btn-danger mt-3"
